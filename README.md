@@ -1,7 +1,8 @@
 # hello-lights-cli
 
 [![npm](https://img.shields.io/npm/v/hello-lights-cli.svg)](https://www.npmjs.com/package/hello-lights-cli)
-[![Dependency Status](https://david-dm.org/jordao76/hello-lights-cli.svg)](https://david-dm.org/jordao76/hello-lights)
+[![Dependency Status](https://david-dm.org/jordao76/hello-lights-cli.svg)](https://david-dm.org/jordao76/hello-lights-cli)
+[![devDependency Status](https://david-dm.org/jordao76/hello-lights-cli/dev-status.svg)](https://david-dm.org/jordao76/hello-lights-cli#info=devDependencies)
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/jordao76/hello-lights-cli/blob/master/LICENSE.md)
 
 > Command-line interface to control a traffic light
