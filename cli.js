@@ -2,6 +2,7 @@
 
 const {Commander} = require('hello-lights');
 const chalk = require('chalk');
+const path = require('path');
 
 /////////////////////////////////////////////////////////////////
 
@@ -48,15 +49,15 @@ require('yargs')
 
 function resolveDeviceManager(options) {
   const clewareDevicePath = 'hello-lights/lib/devices/cleware-switch1';
-  let path;
+  let devicePath;
   if (options.devicePath) {
-    path = options.devicePath; // note: relative to this script file, NOT to the executing directory
+    devicePath = path.resolve(options.devicePath);
   }
   else {
     // for now, it is always the case that: options.device === 'cleware'
-    path = clewareDevicePath;
+    devicePath = clewareDevicePath;
   }
-  let {Manager} = require(path);
+  let {Manager} = require(devicePath);
   return Manager;
 }
 
