@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "description": "A CLI for hello-lights.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jordao76/hello-lights-cli.git"
+  },
+  "author": "Rodrigo Jordao <rodrigo.jordao@gmail.com> (https://github.com/jordao76)",
+  "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

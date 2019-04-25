@@ -6,27 +6,16 @@
 
 Works with a [Cleware USB traffic light](http://www.cleware.info/data/usbtischampel_E.html).
 
-This is command-line interface (CLI) for [hello-lights](https://github.com/jordao76/hello-lights).
+This is a command-line interface (CLI) for [hello-lights](https://github.com/jordao76/hello-lights).
 
 ## Install
 
-### (now)
-Git clone, cd into it, then:
-```sh
-$ npm install
-```
-### (future)
 ```sh
 $ npm install -g hello-lights-cli
 ```
 
 ## Usage
 
-### (now)
-```sh
-$ node cli.js --help
-```
-### (future)
 ```sh
 $ hello-lights --help
 ```

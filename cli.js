@@ -17,6 +17,7 @@ const logger = {
 /////////////////////////////////////////////////////////////////
 
 require('yargs')
+  .scriptName("hello-lights")
   .option('device', {
     alias: 'd',
     describe: 'device type to use',
