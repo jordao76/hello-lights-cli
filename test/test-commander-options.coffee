@@ -1,4 +1,5 @@
 expect = require('chai').expect
+sinon = require('sinon')
 yargs = require '../src/yargs'
 commanderOptions = require '../src/commander-options'
 
@@ -22,7 +23,7 @@ describe 'commander-options', () ->
 
   describe '--device-path', () ->
 
-    it '--device-path', () ->
+    it '--device-path ../cli', () ->
       yargs.parse '--device-path ../cli', (err, argv, output) ->
         # take care of Windows paths
         expect(['../cli', '..\\cli']).to.include argv.devicePath
@@ -53,9 +54,40 @@ describe 'commander-options', () ->
 
   describe 'resolveCommander', () ->
 
-    xit '--device cleware --selector single', () ->
+    {PhysicalTrafficLightSelector, PhysicalMultiTrafficLightSelector} =
+      require('hello-lights').selectors
+
+    beforeEach () ->
+      # use sinon to prevent usb-detect to kick in with the ClewareSwitch1DeviceManager
+      {Manager} = require 'hello-lights/lib/devices/cleware-switch1'
+      @startMonitoring = sinon.stub(Manager, 'startMonitoring');
+      @stopMonitoring = sinon.stub(Manager, 'stopMonitoring');
+      @clewareManager = Manager
+
+    afterEach () ->
+      @startMonitoring.restore()
+      @stopMonitoring.restore()
+
+    it '--device cleware --selector single', () ->
       options =
         device: 'cleware'
         selector: 'single'
       commander = commanderOptions.resolveCommander(options)
-      # TODO: stub 'cleware'
+      expect(commander.selector).to.be.an.instanceof PhysicalTrafficLightSelector
+      expect(commander.selector.manager).to.equal @clewareManager
+
+    it '--device cleware --selector multi', () ->
+      options =
+        device: 'cleware'
+        selector: 'multi'
+      commander = commanderOptions.resolveCommander(options)
+      expect(commander.selector).to.be.an.instanceof PhysicalMultiTrafficLightSelector
+      expect(commander.selector.manager).to.equal @clewareManager
+
+    it '--device-path ./test/dummy-device', () ->
+      options =
+        devicePath: './test/dummy-device'
+        device: 'cleware' # ignored in the presence of --device-path
+        selector: 'single'
+      commander = commanderOptions.resolveCommander(options)
+      expect(commander.selector.manager).to.equal require('./dummy-device').Manager
