@@ -23,10 +23,10 @@ describe 'commander-options', () ->
 
   describe '--device-path', () ->
 
-    it '--device-path ../cli', () ->
-      yargs.parse '--device-path ../cli', (err, argv, output) ->
-        # take care of Windows paths
-        expect(['../cli', '..\\cli']).to.include argv.devicePath
+    it '--device-path test/dummy-device', () ->
+      yargs.parse '--device-path test/dummy-device', (err, argv, output) ->
+        # take care of Windows paths as well
+        expect(['test/dummy-device', 'test\\dummy-device']).to.include argv.devicePath
         expect(err).to.be.null
 
   describe '--selector', () ->
@@ -84,9 +84,9 @@ describe 'commander-options', () ->
       expect(commander.selector).to.be.an.instanceof PhysicalMultiTrafficLightSelector
       expect(commander.selector.manager).to.equal @clewareManager
 
-    it '--device-path ./test/dummy-device', () ->
+    it '--device-path test/dummy-device', () ->
       options =
-        devicePath: './test/dummy-device'
+        devicePath: 'test/dummy-device'
         device: 'cleware' # ignored in the presence of --device-path
         selector: 'single'
       commander = commanderOptions.resolveCommander(options)
