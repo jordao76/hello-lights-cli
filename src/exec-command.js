@@ -1,11 +1,11 @@
 /////////////////////////////////////////////////////////////////
 
-const {resolveCommander} = require('./commander-options');
+const commanderOptions = require('./commander-options');
 
 /////////////////////////////////////////////////////////////////
 
 async function exec(options, cmd, cdr = []) {
-  let commander = resolveCommander(options);
+  let commander = commanderOptions.resolveCommander(options);
   cdr.unshift(cmd);
   let command = cdr.join(' ');
   await commander.run(command);
@@ -23,16 +23,20 @@ const commandSpec = {
     yargs.positional('cmd', { describe: 'command to execute' }),
 
   handler: argv =>
-    exec(argv, argv.cmd, argv._.slice(1)), // argv._ includes 'exec' at index 0
+    exec(argv, argv.cmd, argv._.slice(1)) // argv._ includes 'exec' at index 0
 
-  define: yargs =>
-    yargs
-      .command(commandSpec)
-      .example('$0 exec bounce 300', '# executes the `bounce 300` command')
 };
 
 /////////////////////////////////////////////////////////////////
 
-module.exports = commandSpec;
+function define(yargs) {
+  yargs
+    .command(commandSpec)
+    .example('$0 exec bounce 300', '# executes the `bounce 300` command');
+};
+
+/////////////////////////////////////////////////////////////////
+
+module.exports = {define};
 
 /////////////////////////////////////////////////////////////////
