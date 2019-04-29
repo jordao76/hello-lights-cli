@@ -17,6 +17,10 @@ describe 'commander-options', () ->
 
   describe '--device', () ->
 
+    it 'default --device is cleware', () ->
+      yargs.parse 'exec hello', (err, argv, output) ->
+        expect(argv.device).to.equal 'cleware'
+        expect(err).to.be.null
     it '--device cleware', () ->
       yargs.parse '--device cleware exec hello', (err, argv, output) ->
         expect(argv.device).to.equal 'cleware'
@@ -28,6 +32,10 @@ describe 'commander-options', () ->
 
   describe '--device-path', () ->
 
+    it '--device-path has no default', () ->
+      yargs.parse 'exec hello', (err, argv, output) ->
+        expect(argv.devicePath).to.be.undefined
+        expect(err).to.be.null
     it '--device-path test/dummy-device', () ->
       yargs.parse '--device-path test/dummy-device exec hello', (err, argv, output) ->
         # take care of Windows paths as well
@@ -36,6 +44,10 @@ describe 'commander-options', () ->
 
   describe '--selector', () ->
 
+    it 'default --selector is single', () ->
+      yargs.parse 'exec hello', (err, argv, output) ->
+        expect(argv.selector).to.equal 'single'
+        expect(err).to.be.null
     it '--selector single', () ->
       yargs.parse '--selector single exec hello', (err, argv, output) ->
         expect(argv.selector).to.equal 'single'
