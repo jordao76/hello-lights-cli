@@ -44,7 +44,8 @@ function resolveCommander(options) {
   return new Commander({
     logger,
     manager: resolveDeviceManager(options),
-    selectorCtor: resolveSelectorCtor(options)
+    selectorCtor: resolveSelectorCtor(options),
+    serialNum: options.serialNum
   });
 }
 
@@ -63,6 +64,9 @@ function define(yargs) {
       describe: 'device type path to use, overrides --device',
       normalize: true,
       hidden: true }) // hide advanced option
+    .option('serial-num', {
+      alias: 'n',
+      describe: 'serial number of device to use (only for "single" selector)' })
     .option('selector', {
       alias: 's',
       describe: 'selector type to use',

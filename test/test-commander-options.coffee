@@ -30,6 +30,17 @@ describe 'commander-options', () ->
         expect(err.message).to.include 'Invalid values'
         expect(err.message).to.include 'Argument: device, Given: "wrong", Choices: "cleware"'
 
+  describe '--serial-num', () ->
+
+    it '--serial-num 42', () ->
+      yargs.parse '--serial-num 42 exec hello', (err, argv, output) ->
+        expect(argv.serialNum).to.equal 42
+        expect(err).to.be.null
+    it '--serial-num blahblah', () ->
+      yargs.parse '--serial-num blahblah exec hello', (err, argv, output) ->
+        expect(argv.serialNum).to.equal 'blahblah'
+        expect(err).to.be.null
+
   describe '--device-path', () ->
 
     it '--device-path has no default', () ->
@@ -88,6 +99,7 @@ describe 'resolveCommander', () ->
     commander = commanderOptions.resolveCommander(options)
     expect(commander.selector).to.be.an.instanceof PhysicalTrafficLightSelector
     expect(commander.selector.manager).to.equal @clewareManager
+    expect(commander.selector.serialNum).to.be.null # is null, not undefined; shouldn't make a difference
 
   it '--device cleware --selector multi', () ->
     options =
@@ -104,3 +116,19 @@ describe 'resolveCommander', () ->
       selector: 'single'
     commander = commanderOptions.resolveCommander(options)
     expect(commander.selector.manager).to.equal require('./dummy-device').Manager
+
+  it '--serial-num 42 --selector single', () ->
+    options =
+      device: 'cleware'
+      serialNum: 42
+      selector: 'single'
+    commander = commanderOptions.resolveCommander(options)
+    expect(commander.selector.serialNum).to.equal 42
+
+  it 'No effect with multi: --serial-num 42 --selector multi', () ->
+    options =
+      device: 'cleware'
+      serialNum: 42
+      selector: 'multi'
+    commander = commanderOptions.resolveCommander(options)
+    expect(commander.selector.serialNum).to.be.undefined # multi doesn't use a serialNum
