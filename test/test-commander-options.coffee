@@ -99,7 +99,7 @@ describe 'resolveCommander', () ->
     commander = commanderOptions.resolveCommander(options)
     expect(commander.selector).to.be.an.instanceof PhysicalTrafficLightSelector
     expect(commander.selector.manager).to.equal @clewareManager
-    expect(commander.selector.serialNum).to.be.null # is null, not undefined; shouldn't make a difference
+    expect(commander.selector.serialNum).to.be.null
 
   it '--device cleware --selector multi', () ->
     options =
