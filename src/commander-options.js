@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const path = require('path');
 const {Commander} = require('hello-lights');
+const {Formatter} = require('hello-lights').commands;
 
 /////////////////////////////////////////////////////////////////
 
@@ -12,6 +13,32 @@ const logger = {
     console.error(chalk.red(...args));
   }
 };
+
+/////////////////////////////////////////////////////////////////
+
+class ChalkFormatter extends Formatter {
+
+  formatName(name) {
+    return chalk.yellow(name);
+  }
+
+  formatParam(param) {
+    return chalk.cyan(super.formatParam(param));
+  }
+
+  formatCode(code) {
+    return chalk.green(super.formatCode(code));
+  }
+
+  formatReturn($return) {
+    return chalk.magenta(super.formatReturn($return));
+  }
+
+  formatInlineCode(code) {
+    return chalk.cyan(`${code.trim()}`);
+  }
+
+}
 
 /////////////////////////////////////////////////////////////////
 
@@ -43,6 +70,7 @@ function resolveSelectorCtor(options) {
 function resolveCommander(options) {
   return new Commander({
     logger,
+    formatter: new ChalkFormatter(),
     manager: resolveDeviceManager(options),
     selectorCtor: resolveSelectorCtor(options),
     serialNum: options.serialNum

@@ -10,7 +10,7 @@ class CommanderRepl {
     this.commander = commander;
     this.multiline = false;
     this.logger = this.commander.logger;
-    this.manager = this.commander.selector.manager; // TODO: expose commander.manager
+    this.manager = this.commander.manager;
   }
 
   formatCommandNames() {

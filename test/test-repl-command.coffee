@@ -13,7 +13,7 @@ describe 'repl-command', () ->
     @mockCommander = {
       commandNames: ['cmd1', 'cmd2']
       @run,
-      selector: { manager: {} }
+      manager: {}
       logger: { log: sinon.stub() }
     }
     @resolveCommander = sinon.stub(commanderOptions, 'resolveCommander')
