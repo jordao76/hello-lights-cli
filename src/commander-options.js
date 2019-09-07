@@ -78,7 +78,7 @@ function resolveDeviceManager(options) {
     devicePath = path.resolve(options.devicePath);
   }
   else {
-    // for now, it is always the case that: options.device === 'cleware'
+    // for now, it is always the case that: options.deviceType === 'cleware'
     devicePath = clewareDevicePath;
   }
   let {Manager} = require(devicePath);
@@ -110,7 +110,7 @@ function resolveCommander(options) {
 
 function define(yargs) {
   yargs
-    .option('device', {
+    .option('device-type', {
       alias: 'd',
       describe: 'device type to use',
       choices: ['cleware'],

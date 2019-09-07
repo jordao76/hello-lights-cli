@@ -15,20 +15,20 @@ describe 'commander-options', () ->
   afterEach () ->
     @resolveCommander.restore()
 
-  describe '--device', () ->
+  describe '--device-type', () ->
 
-    it 'default --device is cleware', () ->
+    it 'default --device-type is cleware', () ->
       yargs.parse 'exec hello', (err, argv, output) ->
-        expect(argv.device).to.equal 'cleware'
+        expect(argv.deviceType).to.equal 'cleware'
         expect(err).to.be.null
-    it '--device cleware', () ->
-      yargs.parse '--device cleware exec hello', (err, argv, output) ->
-        expect(argv.device).to.equal 'cleware'
+    it '--device-type cleware', () ->
+      yargs.parse '--device-type cleware exec hello', (err, argv, output) ->
+        expect(argv.deviceType).to.equal 'cleware'
         expect(err).to.be.null
-    it '--device wrong', () ->
-      yargs.parse '--device wrong exec hello', (err, argv, output) ->
+    it '--device-type wrong', () ->
+      yargs.parse '--device-type wrong exec hello', (err, argv, output) ->
         expect(err.message).to.include 'Invalid values'
-        expect(err.message).to.include 'Argument: device, Given: "wrong", Choices: "cleware"'
+        expect(err.message).to.include 'Argument: device-type, Given: "wrong", Choices: "cleware"'
 
   describe '--serial-num', () ->
 

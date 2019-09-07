@@ -4,11 +4,9 @@ const commanderOptions = require('./commander-options');
 
 /////////////////////////////////////////////////////////////////
 
-async function exec(options, cmd, cdr = []) {
+async function execFile(options, filePath) {
   let commander = commanderOptions.resolveCommander(options);
-  cdr.unshift(cmd);
-  let command = cdr.join(' ');
-  await commander.run(command);
+  await commander.runFile(filePath);
   commander.close();
 }
 
@@ -16,14 +14,14 @@ async function exec(options, cmd, cdr = []) {
 
 const commandSpec = {
 
-  command: 'exec <cmd>',
-  describe: 'executes a command',
+  command: 'exec-file <file-path>',
+  describe: 'executes commands in a file',
 
   builder: yargs =>
-    yargs.positional('cmd', { describe: 'command to execute' }),
+    yargs.positional('file-path', { describe: 'file to execute' }),
 
   handler: argv =>
-    exec(argv, argv.cmd, argv._.slice(1)) // argv._ includes 'exec' at index 0
+    execFile(argv, argv.filePath)
 
 };
 
@@ -32,7 +30,7 @@ const commandSpec = {
 function define(yargs) {
   yargs
     .command(commandSpec)
-    .example('$0 exec bounce 300', '# executes the `bounce 300` command');
+    .example('$0 exec-file ./my-file.clj', '# executes the file');
 };
 
 /////////////////////////////////////////////////////////////////
