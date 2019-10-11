@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "hello-lights": "^0.2.2",
+    "hello-lights": "^0.2.7",
     "yargs": "^13.3.0"
   },
   "bin": {

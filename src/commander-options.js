@@ -76,32 +76,21 @@ function resolveDeviceManager(options) {
   let devicePath;
   if (options.devicePath) {
     devicePath = path.resolve(options.devicePath);
-  }
-  else {
+  } else {
     // for now, it is always the case that: options.deviceType === 'cleware'
     devicePath = clewareDevicePath;
   }
-  let {Manager} = require(devicePath);
+  const {Manager} = require(devicePath);
   return Manager;
 }
 
 /////////////////////////////////////////////////////////////////
 
-function resolveSelectorCtor(options) {
-  const selectorProperty =
-    options.selector === 'multi' ? 'PhysicalMultiTrafficLightSelector'
-      : 'PhysicalTrafficLightSelector'; // options.selector === 'single'
-  return require('hello-lights').selectors[selectorProperty];
-}
-
-/////////////////////////////////////////////////////////////////
-
 function resolveCommander(options) {
-  return new Commander({
+  return Commander[options.selector]({
     logger,
     formatter: new ChalkMetaFormatter(),
     manager: resolveDeviceManager(options),
-    selectorCtor: resolveSelectorCtor(options),
     serialNum: options.serialNum
   });
 }
